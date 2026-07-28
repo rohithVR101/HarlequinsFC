@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.road.quinscc.eureka-server' is invalid and this project uses 'com.road.quinscc.eurekaserver' instead.
+* The original package name 'com.road.quinsfc.eureka-server' is invalid and this project uses 'com.road.quinsfc.eurekaserver' instead.
 
 # Getting Started
 

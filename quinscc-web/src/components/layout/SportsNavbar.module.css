@@ -1,0 +1,321 @@
+/* =============================================
+   SportsNavbar Styles
+   ============================================= */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  transition: all var(--transition-medium);
+}
+
+.navbarTransparent {
+  background: transparent;
+}
+
+.navbarSolid {
+  background: rgba(15, 15, 26, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ---- Brand Section ---- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo {
+  height: 48px;
+  width: auto;
+  transition: transform var(--transition-medium);
+}
+
+.brand:hover .logo {
+  transform: scale(1.05);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandName {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--hcc-white);
+  line-height: 1.2;
+}
+
+.brandTagline {
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  color: var(--hcc-gray-400);
+  text-transform: uppercase;
+}
+
+/* ---- Desktop Navigation ---- */
+.navLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  display: block;
+  padding: 8px 16px;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--hcc-gray-300);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  position: relative;
+  cursor: pointer;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--hcc-accent);
+  transition: width var(--transition-medium);
+}
+
+.navLink:hover {
+  color: var(--hcc-white);
+}
+
+.navLink:hover::after {
+  width: 60%;
+}
+
+.navLinkActive {
+  color: var(--hcc-accent) !important;
+}
+
+.navLinkActive::after {
+  width: 60% !important;
+  background: var(--hcc-accent) !important;
+}
+
+/* ---- Nav Actions ---- */
+.navActions {
+  flex-shrink: 0;
+}
+
+/* ---- User Dropdown (Mantine Menu styling) ---- */
+.userMenuBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border: 1px solid rgba(233, 30, 99, 0.4);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--hcc-white);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+  backdrop-filter: blur(10px);
+}
+
+.userMenuBtn:hover {
+  background: rgba(233, 30, 99, 0.15);
+  border-color: var(--hcc-accent);
+  box-shadow: 0 0 15px rgba(233, 30, 99, 0.25);
+}
+
+.usernameText {
+  color: #f8bbd0;
+  font-weight: 700;
+}
+
+.caret {
+  transition: transform var(--transition-fast);
+  color: var(--hcc-gray-300);
+}
+
+/* Menu Dropdown styling */
+.userMenuDropdown {
+  background: rgba(22, 33, 62, 0.96) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(233, 30, 99, 0.3) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(233, 30, 99, 0.15) !important;
+}
+
+.userMenuLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.userMenuName {
+  font-family: var(--font-heading);
+}
+
+.userMenuItem {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--hcc-gray-200) !important;
+  transition: all var(--transition-fast);
+}
+
+.userMenuItem:hover {
+  background: rgba(233, 30, 99, 0.15) !important;
+  color: var(--hcc-accent-light) !important;
+  padding-left: 20px;
+}
+
+.userMenuDivider {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ---- Tickets Button ---- */
+.ticketsBtn {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all var(--transition-medium);
+}
+
+.ticketsBtn:hover {
+  background: var(--hcc-accent) !important;
+  color: var(--hcc-white) !important;
+  transform: translateX(4px);
+}
+
+/* ---- Hamburger (only visible on mobile) ---- */
+.hamburger {
+  display: none;
+}
+
+/* ---- Drawer (Mobile Menu) ---- */
+.drawerContent {
+  background: rgba(15, 15, 26, 0.98) !important;
+  backdrop-filter: blur(30px);
+}
+
+.drawerBody {
+  height: 100%;
+  padding: 0 !important;
+}
+
+.mobileNavLink {
+  display: block;
+  padding: 14px 40px;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--hcc-gray-300);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.mobileNavLink:hover,
+.mobileNavLinkActive {
+  color: var(--hcc-accent);
+}
+
+.mobileTickets {
+  margin-top: 30px;
+  padding: 12px 40px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.mobileUserItem {
+  font-size: 1.1rem;
+  color: var(--hcc-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.mobileLogout {
+  font-size: 1.1rem;
+  color: #ff5252;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 992px) {
+  .navLinks {
+    display: none;
+  }
+
+  .ticketsBtn {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .brandName {
+    font-size: 1rem;
+  }
+
+  .brandTagline {
+    font-size: 0.5rem;
+  }
+
+  .logo {
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brandText {
+    display: none;
+  }
+}

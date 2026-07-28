@@ -1,0 +1,70 @@
+/* =============================================
+   PlaceholderPage Styles
+   ============================================= */
+
+.placeholder {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Diamond pattern background */
+.placeholder::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%23e91e63' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+}
+
+/* Gradient glow behind icon */
+.placeholder::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(136, 14, 79, 0.15) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.icon {
+  opacity: 0.7;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--hcc-white);
+}
+
+.divider {
+  background: linear-gradient(90deg, var(--hcc-primary), var(--hcc-accent));
+  border: none;
+  height: 3px;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+  }
+}

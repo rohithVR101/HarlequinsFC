@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.road.quinscc.config-server' is invalid and this project uses 'com.road.quinscc.configserver' instead.
+* The original package name 'com.road.quinsfc.config-server' is invalid and this project uses 'com.road.quinsfc.configserver' instead.
 
 # Getting Started
 

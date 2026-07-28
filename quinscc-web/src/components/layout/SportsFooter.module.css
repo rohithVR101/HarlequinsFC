@@ -1,0 +1,138 @@
+/* =============================================
+   SportsFooter Styles
+   ============================================= */
+
+.footer {
+  position: relative;
+  background: var(--hcc-darker);
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Diamond pattern texture */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%23e91e63' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+}
+
+/* Gradient accent line at top */
+.accentLine {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--hcc-primary-dark),
+    var(--hcc-accent),
+    var(--hcc-primary-light),
+    var(--hcc-accent),
+    var(--hcc-primary-dark)
+  );
+}
+
+/* ---- Brand ---- */
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footerLogo {
+  height: 56px;
+  width: auto;
+}
+
+.footerBrandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerBrandName {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--hcc-white);
+}
+
+.footerBrandTagline {
+  font-family: var(--font-heading);
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  color: var(--hcc-gray-500);
+  text-transform: uppercase;
+}
+
+/* ---- Column Titles ---- */
+.columnTitle {
+  font-family: var(--font-heading);
+}
+
+/* ---- Links ---- */
+.footerLink {
+  transition: all var(--transition-fast);
+  display: inline-block;
+}
+
+.footerLink:hover {
+  color: var(--hcc-white) !important;
+  transform: translateX(4px);
+}
+
+.contactIcon {
+  color: var(--hcc-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ---- Social Links ---- */
+.socialLink {
+  background: var(--hcc-surface) !important;
+  color: var(--hcc-gray-300) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  transition: all var(--transition-medium) !important;
+}
+
+.socialLink:hover {
+  background: var(--hcc-accent) !important;
+  color: var(--hcc-white) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+}
+
+/* ---- Bottom Bar ---- */
+.bottomBar {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.legalLink {
+  transition: color var(--transition-fast);
+}
+
+.legalLink:hover {
+  color: var(--hcc-gray-300) !important;
+}
+
+/* Grid override for correct column proportions */
+.footerGrid {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .bottomBar {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

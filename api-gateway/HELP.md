@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.road.quinscc.api-gateway' is invalid and this project uses 'com.road.quinscc.apigateway' instead.
+* The original package name 'com.road.quinsfc.api-gateway' is invalid and this project uses 'com.road.quinsfc.apigateway' instead.
 
 # Getting Started
 

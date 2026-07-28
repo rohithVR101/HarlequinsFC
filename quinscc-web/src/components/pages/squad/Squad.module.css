@@ -1,0 +1,289 @@
+/* =============================================
+   Squad Page Styles — Harlequins FC
+   ============================================= */
+
+.squadPage {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+  background: var(--hcc-darker);
+}
+
+/* ---- Hero Section ---- */
+.heroSection {
+  position: relative;
+  padding: 5rem 2rem 3rem;
+  background: linear-gradient(
+    180deg,
+    rgba(136, 14, 79, 0.25) 0%,
+    rgba(15, 15, 26, 0.95) 100%
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Diamond pattern background overlay */
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%23e91e63' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.heroTitle {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--hcc-white);
+  line-height: 1.1;
+}
+
+/* ---- Controls Bar ---- */
+.controlsBar {
+  background: var(--hcc-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Chip filter styling to match the branded pill look */
+.filterChip {
+  --chip-bg: transparent;
+  --chip-hover: rgba(233, 30, 99, 0.1);
+  --chip-color: var(--hcc-gray-300);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.filterChip :global(.mantine-Chip-label) {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  transition: all var(--transition-medium);
+}
+
+.filterChip :global(.mantine-Chip-label:hover) {
+  border-color: rgba(233, 30, 99, 0.4);
+}
+
+.filterChip :global(.mantine-Chip-label[data-checked]) {
+  box-shadow: 0 0 15px rgba(233, 30, 99, 0.4);
+}
+
+/* Search input */
+.searchInput {
+  min-width: 260px;
+}
+
+.searchInputInner {
+  background: rgba(15, 15, 26, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: var(--hcc-white) !important;
+}
+
+.searchInputInner:focus {
+  border-color: var(--hcc-accent) !important;
+  box-shadow: 0 0 15px rgba(233, 30, 99, 0.2);
+}
+
+/* ---- Section Headers ---- */
+.sectionBlock {
+  margin-bottom: 4rem;
+}
+
+.sectionHeader {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 10px;
+}
+
+.sectionTitle {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--hcc-white);
+}
+
+/* ---- Player Card ---- */
+.playerCard {
+  background: var(--hcc-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden;
+  transition: transform var(--transition-medium), border-color var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.playerCard:hover {
+  transform: translateY(-6px);
+  border-color: rgba(233, 30, 99, 0.4) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(233, 30, 99, 0.15);
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 125%; /* 4:5 aspect ratio */
+  background: radial-gradient(
+    circle at center top,
+    var(--hcc-surface-light) 0%,
+    var(--hcc-darker) 100%
+  );
+  overflow: hidden;
+}
+
+/* Harlequin watermark background behind image */
+.imageWrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%23e91e63' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+}
+
+.playerImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform var(--transition-slow);
+}
+
+.playerCard:hover .playerImage {
+  transform: scale(1.04);
+}
+
+/* Gradient overlay on image bottom */
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    var(--hcc-surface) 0%,
+    rgba(22, 33, 62, 0.5) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Fallback avatar when image doesn't load */
+.fallbackAvatar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--hcc-surface-light), var(--hcc-darker));
+}
+
+.avatarIcon {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+/* ---- Card Top Badges ---- */
+.topBadges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.captainBadge {
+  box-shadow: 0 0 12px rgba(249, 168, 37, 0.5);
+}
+
+.firstTeamBadge {
+  background: rgba(136, 14, 79, 0.85) !important;
+  border: 1px solid rgba(233, 30, 99, 0.3);
+}
+
+.squadNumber {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Card Footer Info ---- */
+.cardInfo {
+  background: var(--hcc-surface);
+}
+
+.playerPosition {
+  font-family: var(--font-heading);
+}
+
+.playerName {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--hcc-white);
+  line-height: 1.2;
+}
+
+.noResultsTitle {
+  font-family: var(--font-heading);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 992px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .searchInput {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroSection {
+    padding: 4rem 1rem 2rem;
+  }
+
+  .playerName {
+    font-size: 1.05rem;
+  }
+}
