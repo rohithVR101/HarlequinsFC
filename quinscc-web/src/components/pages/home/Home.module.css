@@ -1,0 +1,457 @@
+/* =============================================
+   Home Page Styles — Harlequins FC
+   ============================================= */
+
+/* ---- Hero Carousel Section ---- */
+.heroSection {
+  position: relative;
+  width: 100%;
+  margin-top: calc(-1 * var(--nav-height));
+}
+
+.heroSlide {
+  position: relative;
+  height: 85vh;
+  min-height: 550px;
+  max-height: 800px;
+  display: flex;
+  align-items: flex-end;
+  padding: 4rem 3rem;
+  background-size: cover;
+  background-position: center top;
+  overflow: hidden;
+}
+
+/* Dark gradient overlay — left heavy */
+.heroSlide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(15, 15, 26, 0.92) 0%,
+    rgba(15, 15, 26, 0.7) 35%,
+    rgba(15, 15, 26, 0.3) 60%,
+    rgba(15, 15, 26, 0.1) 100%
+  );
+  z-index: 1;
+}
+
+/* Diamond pattern on right side */
+.heroSlide::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%23e91e63' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+  z-index: 2;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 3;
+  max-width: 600px;
+}
+
+.heroTitle {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: var(--hcc-white);
+}
+
+/* Hero CTA Button */
+.heroCta {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  width: fit-content;
+  transition: all var(--transition-medium);
+}
+
+.heroCta:hover {
+  background: var(--hcc-accent) !important;
+  color: var(--hcc-white) !important;
+  transform: translateX(4px);
+}
+
+/* Hero Navigation Arrows */
+.heroArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(15, 15, 26, 0.5) !important;
+  color: var(--hcc-white) !important;
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-medium) !important;
+}
+
+.heroArrow:hover {
+  border-color: var(--hcc-accent) !important;
+  background: rgba(233, 30, 99, 0.2) !important;
+}
+
+.heroArrowLeft {
+  left: 1.5rem;
+}
+
+.heroArrowRight {
+  right: 1.5rem;
+}
+
+/* Hero Pagination */
+.heroPagination {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.heroDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+  padding: 0;
+}
+
+.heroDot:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.heroDotActive {
+  background: var(--hcc-accent);
+  box-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+}
+
+.heroPaginationText {
+  font-family: var(--font-heading);
+}
+
+/* ---- Content Grid Section ---- */
+.contentGrid {
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gridCard {
+  background: var(--hcc-darker) !important;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Diamond pattern on cards */
+.gridCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%23e91e63' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+}
+
+.gridCardTitle {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--hcc-white);
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Grid CTA Buttons ---- */
+.gridCta {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all var(--transition-medium);
+}
+
+.gridCta:hover {
+  background: var(--hcc-accent) !important;
+  color: var(--hcc-white) !important;
+  transform: translateX(4px);
+}
+
+/* ---- Next Fixture Card ---- */
+.fixtureCard {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.teamLogo {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
+}
+
+.teamLogoFallback {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--hcc-gray-300);
+  font-family: var(--font-heading);
+  letter-spacing: 1px;
+}
+
+.teamName {
+  font-family: var(--font-heading);
+}
+
+.vsText {
+  font-family: var(--font-heading);
+}
+
+.fixtureDetailIcon {
+  color: var(--hcc-accent);
+  flex-shrink: 0;
+}
+
+/* ---- Latest Videos Card ---- */
+.viewAllLink {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color var(--transition-fast);
+  font-family: var(--font-heading);
+}
+
+.viewAllLink:hover {
+  color: var(--hcc-accent) !important;
+}
+
+.videoItem {
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  margin: -4px;
+}
+
+.videoItem:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.videoThumbnail {
+  position: relative;
+  width: 120px;
+  min-width: 120px;
+  height: 72px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.videoThumbnail img {
+  transition: transform var(--transition-medium);
+}
+
+.videoItem:hover .videoThumbnail img {
+  transform: scale(1.05);
+}
+
+.videoPlayOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.videoItem:hover .videoPlayOverlay {
+  opacity: 1;
+}
+
+.videoDuration {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--hcc-white);
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+.videoCategory {
+  font-family: var(--font-heading);
+}
+
+.videoTitle {
+  font-family: var(--font-heading);
+}
+
+/* ---- Squad Card ---- */
+.squadCard {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.squadContent {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  height: 100%;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.squadImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform var(--transition-slow);
+}
+
+.squadContent:hover .squadImage {
+  transform: scale(1.05);
+}
+
+.squadOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 15, 26, 0.95) 0%,
+    rgba(15, 15, 26, 0.4) 50%,
+    transparent 100%
+  );
+}
+
+.squadInfo {
+  position: relative;
+  z-index: 1;
+  padding: 1.2rem;
+}
+
+.squadName {
+  font-family: var(--font-heading);
+}
+
+/* ---- Kit Card ---- */
+.kitSegmented {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kitImageWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 1rem;
+}
+
+.kitImage {
+  max-height: 220px;
+  width: auto;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
+  transition: transform var(--transition-medium);
+}
+
+.kitImageWrapper:hover .kitImage {
+  transform: scale(1.05) translateY(-5px);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .heroSlide {
+    height: 70vh;
+    min-height: 450px;
+    padding: 3rem 1.5rem;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroArrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .heroArrowLeft {
+    left: 0.75rem;
+  }
+
+  .heroArrowRight {
+    right: 0.75rem;
+  }
+
+  .videoThumbnail {
+    width: 100px;
+    min-width: 100px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroSlide {
+    height: 65vh;
+    padding: 2rem 1rem;
+  }
+
+  .heroTitle {
+    font-size: 1.6rem;
+  }
+
+  .heroPagination {
+    bottom: 1.2rem;
+  }
+}

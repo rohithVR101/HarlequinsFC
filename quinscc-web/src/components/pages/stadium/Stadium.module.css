@@ -1,0 +1,118 @@
+/* =============================================
+   Stadium Page Styles — Harlequins FC
+   ============================================= */
+
+.stadiumPage {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+  background: var(--hcc-darker);
+}
+
+/* ---- Hero Section ---- */
+.heroSection {
+  position: relative;
+  padding: 6rem 2rem 4rem;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 15, 26, 0.4) 0%,
+    rgba(15, 15, 26, 0.95) 100%
+  ), url('https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%23e91e63' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.heroTag {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--hcc-accent);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.heroTitle {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--hcc-white);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.heroSubtitle {
+  font-size: 1rem;
+  color: var(--hcc-gray-300);
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* ---- Content Container ---- */
+.contentContainer {
+  max-width: 1100px;
+  margin: 3rem auto 0;
+  padding: 0 2rem;
+}
+
+.statCard {
+  background: var(--hcc-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition: transform var(--transition-medium);
+}
+
+.statCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(233, 30, 99, 0.3) !important;
+}
+
+.statValue {
+  font-family: var(--font-heading);
+}
+
+.sectionPaper {
+  background: var(--hcc-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.sectionTitle {
+  font-family: var(--font-heading);
+  color: var(--hcc-white);
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.2rem;
+  }
+
+  .contentContainer {
+    padding: 0 1rem;
+  }
+}

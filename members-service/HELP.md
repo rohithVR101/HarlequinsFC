@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.road.quinscc.members-service' is invalid and this project uses 'com.road.quinscc.membersservice' instead.
+* The original package name 'com.road.quinsfc.members-service' is invalid and this project uses 'com.road.quinsfc.membersservice' instead.
 
 # Getting Started
 
