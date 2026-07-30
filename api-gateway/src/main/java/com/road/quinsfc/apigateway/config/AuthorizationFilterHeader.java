@@ -1,11 +1,8 @@
 package com.road.quinsfc.apigateway.config;
 
-import com.google.common.base.Strings;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.env.Environment;
@@ -25,11 +22,11 @@ import java.util.Objects;
 @Component
 public class AuthorizationFilterHeader extends AbstractGatewayFilterFactory<AuthorizationFilterHeader.Config> {
 
-    @Autowired
-    Environment environment;
+    private final Environment environment;
 
-    public AuthorizationFilterHeader() {
+    public AuthorizationFilterHeader(Environment environment) {
         super(Config.class);
+        this.environment = environment;
     }
 
     public static class Config {
@@ -66,8 +63,9 @@ public class AuthorizationFilterHeader extends AbstractGatewayFilterFactory<Auth
         SecretKey secretKey = new SecretKeySpec(secretKeyBytes, "HmacSHA512");
         JwtParser jwtParser = Jwts.parser().verifyWith(secretKey).build();
         try {
-            Claims claims = (Claims) jwtParser.parse(token).getPayload();
-            if (Strings.isNullOrEmpty(claims.getSubject())) {
+            Claims claims = jwtParser.parseSignedClaims(token).getPayload();
+            String subject = claims.getSubject();
+            if (subject == null || subject.isBlank()) {
                 return false;
             }
         } catch (Exception exception) {

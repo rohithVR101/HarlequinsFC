@@ -22,13 +22,13 @@ Harlequins FC is a full-stack sports club application built with a modern **Spri
 ---
 
 ### ⚙️ Backend (Microservices Architecture)
-* **Java**: Java 17 JDK
-* **Framework**: Spring Boot 3.1.1 & Spring Cloud 2022.0.3
-* **Build Tool**: Gradle (with root & service wrapper scripts)
+* **Java**: Java 21 JDK
+* **Framework**: Spring Boot 3.5.3 & Spring Cloud 2025.0.1
+* **Build Tool**: Gradle (with root & service wrapper scripts, Gradle 8.5)
 * **Group**: `com.road.quinsfc`
-* **Database**: MySQL 8.0 (Connector version 8.0.33)
-* **Security & Auth**: Spring Security + JWT Authentication (`io.jsonwebtoken` 0.12.3)
-* **Messaging & Service Bus**: RabbitMQ (port 5672)
+* **Database**: MySQL 8.0 (Connector `com.mysql:mysql-connector-j`) & MongoDB
+* **Security & Auth**: Spring Security + JWT Authentication (`io.jsonwebtoken` 0.12.6)
+* **Messaging & Config Bus**: Apache Kafka (port 9092, KRaft mode)
 
 #### Microservices Overview:
 * **`config-server`** (Port `8200`): Centralized configuration management using Spring Cloud Config (`com.road.quinsfc.configserver`).
@@ -43,10 +43,16 @@ Harlequins FC is a full-stack sports club application built with a modern **Spri
 
 ### Prerequisites
 Make sure you have the following installed on your machine:
-* **Java 17 JDK** (configured in system `PATH` / `JAVA_HOME`)
+* **Java 21 JDK** (configured in system `PATH` / `JAVA_HOME`)
 * **Node.js** (v18.x or v20.x recommended) & **npm**
-* **MySQL 8.0** running locally on port `3306` (database schema `quinsfc_members`)
-* **RabbitMQ** (optional for config bus refresh, running on default port `5672`)
+* **Docker / Docker Desktop** (for running local Kafka broker via `docker compose up -d`)
+* **MySQL 8.0** running locally on port `3306` (database schema `quinscc_members`)
+
+#### Start Local Infrastructure (Kafka Broker)
+Run the following command at the root of the repository to start Kafka:
+```bash
+docker compose up -d
+```
 
 ---
 

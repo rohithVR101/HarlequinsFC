@@ -4,11 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.road.quinsfc.membersservice.model.AuthenticationRequestModel;
 import com.road.quinsfc.membersservice.service.MembersService;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.SignatureAlgorithm;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,8 +28,10 @@ import java.util.Date;
 import java.util.Objects;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+
     private final MembersService membersService;
-    public Environment environment;
+    private final Environment environment;
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, MembersService membersService, Environment environment) {
         super(authenticationManager);
@@ -40,11 +43,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             AuthenticationRequestModel credentials = new ObjectMapper().readValue(request.getInputStream(), AuthenticationRequestModel.class);
+            logger.info("Attempting authentication for user: {}", credentials != null ? credentials.getUser() : "null");
             return getAuthenticationManager().authenticate(
                     new UsernamePasswordAuthenticationToken(credentials.getUser(), credentials.getPassword(), new ArrayList<>())
             );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            logger.error("Error during authentication attempt for path [{}]: ", request.getRequestURI(), e);
+            if (e instanceof AuthenticationException authException) {
+                throw authException;
+            }
+            throw new RuntimeException("Authentication request processing failed", e);
         }
     }
 
@@ -52,7 +60,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authResult) throws IOException, ServletException {
         User user = (User) authResult.getPrincipal();
-//        MemberDTO memberDetails = membersService.findByUserName(user.getUsername());
+        logger.info("Authentication successful for user: {}", user.getUsername());
         long expiryTime = Long.parseLong(Objects.requireNonNull(environment.getProperty("token.expiration_time")));
         String tokenSecret = environment.getProperty("token.secret");
         byte[] secretKeyBytes = Base64.getEncoder().encode(Objects.requireNonNull(tokenSecret).getBytes());
@@ -65,7 +73,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .compact();
         response.addHeader("Authorization", token);
         response.addHeader("userId", user.getUsername());
-        response.addHeader("Access-Control-Expose-Headers", "Authorization");
-        response.addHeader("Access-Control-Allow-Headers", "Authorization, X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept, X-Custom-header");
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                                AuthenticationException failed) throws IOException, ServletException {
+        logger.error("Authentication failed for request to [{}]: {}", request.getRequestURI(), failed.getMessage(), failed);
+        super.unsuccessfulAuthentication(request, response, failed);
     }
 }
