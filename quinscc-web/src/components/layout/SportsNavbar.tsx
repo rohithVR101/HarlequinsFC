@@ -154,7 +154,7 @@ function SportsNavbar() {
 
                 <Menu.Item
                   leftSection={<TicketIcon size={16} weight="bold" />}
-                  onClick={() => navigate('/tickets')}
+                  onClick={() => navigate('/my-tickets')}
                 >
                   My Tickets
                 </Menu.Item>

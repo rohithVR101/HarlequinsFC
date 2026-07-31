@@ -52,7 +52,7 @@ public class WebSecurityConfiguration {
                 new AuthenticationFilter(authenticationManager, membersService, environment);
         String loginUrlPath = environment.getProperty("login.url.path");
         if (loginUrlPath == null || loginUrlPath.isBlank()) {
-            loginUrlPath = "/members/login";
+            loginUrlPath = "/api/members/login";
         }
         authenticationFilter.setFilterProcessesUrl(loginUrlPath);
 

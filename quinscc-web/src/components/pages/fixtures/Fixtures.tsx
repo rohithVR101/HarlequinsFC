@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Container,
   Card,
@@ -48,6 +48,7 @@ function TeamLogo({ name: _name, shortName, isHarlequins }: { name: string; shor
 }
 
 function FixtureCard({ fixture }: { fixture: Fixture }) {
+  const navigate = useNavigate();
   const isCompleted = fixture.status === 'COMPLETED';
 
   return (
@@ -144,8 +145,7 @@ function FixtureCard({ fixture }: { fixture: Fixture }) {
               {fixture.time} GMT
             </Text>
             <Button
-              component={Link}
-              to="/tickets"
+              onClick={() => navigate('/tickets', { state: { autoBookFixtureId: fixture.id } })}
               variant="outline"
               color="pink"
               radius="xl"

@@ -11,11 +11,7 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/members': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-      },
-      '/parking': {
+      '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
       },
@@ -27,4 +23,3 @@ export default defineConfig({
     setupFiles: './src/test/setup.ts',
   },
 })
-

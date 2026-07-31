@@ -35,8 +35,8 @@ const api = axios.create({
 
 export const loginUser = async (payload: LoginPayload): Promise<LoginResponse> => {
   try {
-    const response = await api.post('/members/login', payload);
-    
+    const response = await api.post('/api/members/login', payload);
+
     // Spring Security AuthenticationFilter returns token in 'Authorization' header and username in 'userId' header
     const token = response.headers['authorization'] || response.headers['Authorization'] || 'mock-jwt-token';
     const username = response.headers['userid'] || response.headers['userId'] || payload.user;
@@ -54,7 +54,7 @@ export const loginUser = async (payload: LoginPayload): Promise<LoginResponse> =
 };
 
 export const registerMember = async (payload: SignUpPayload): Promise<RestResponse> => {
-  const response = await api.post<RestResponse>('/members/create', payload);
+  const response = await api.post<RestResponse>('/api/members/create', payload);
   if (response.data.errorMessage) {
     throw new Error(response.data.errorMessage);
   }
