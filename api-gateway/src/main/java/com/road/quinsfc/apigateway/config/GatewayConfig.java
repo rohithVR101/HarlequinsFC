@@ -41,6 +41,15 @@ public class GatewayConfig {
                                 .path("/api/tickets/purchase", "/api/tickets/my-tickets", "/api/tickets/cancel/**")
                                 .filters(f -> f.filter(authorizationFilterHeader.apply(new AuthorizationFilterHeader.Config())))
                                 .uri("lb://tickets-ms"))
+                .route("payments-service-public",
+                        r -> r.path("/api/payments/webhook", "/api/payments/fulfill")
+                                .uri("lb://payments-ms"))
+                .route("payments-service-protected",
+                        r -> r.header(HttpHeaders.AUTHORIZATION, "Bearer (.*)")
+                                .and()
+                                .path("/api/payments/**")
+                                .filters(f -> f.filter(authorizationFilterHeader.apply(new AuthorizationFilterHeader.Config())))
+                                .uri("lb://payments-ms"))
                 .build();
     }
 }

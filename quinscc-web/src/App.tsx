@@ -11,6 +11,7 @@ import Login from './components/pages/club/login/Login';
 import SignUp from './components/pages/club/signup/SignUp';
 import Tickets from './components/pages/tickets/Tickets';
 import MyTickets from './components/pages/tickets/MyTickets';
+import PaymentSuccess from './components/pages/tickets/PaymentSuccess';
 import PlaceholderPage from './components/pages/PlaceholderPage';
 import './App.css';
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/join-the-club" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/tickets" element={<Tickets />} />
+          <Route path="/tickets/payment-success" element={<PaymentSuccess />} />
           <Route path="/my-tickets" element={<MyTickets />} />
           <Route path="/profile" element={<PlaceholderPage title="User Profile" />} />
           <Route path="*" element={<PlaceholderPage title="404 - Page Not Found" />} />
