@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Paper,
   Title,
@@ -28,6 +28,7 @@ import classes from './Login.module.css';
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { mutate: login, isPending, isError, error } = useLoginMutation();
 
   const {
@@ -44,7 +45,9 @@ function Login() {
   const onSubmit = (data: LoginPayload) => {
     login(data, {
       onSuccess: () => {
-        navigate('/');
+        const from = (location.state as { from?: string })?.from || '/';
+        const autoBookFixtureId = (location.state as { autoBookFixtureId?: string })?.autoBookFixtureId;
+        navigate(from, { state: { autoBookFixtureId } });
       },
     });
   };

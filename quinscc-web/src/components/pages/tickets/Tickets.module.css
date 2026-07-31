@@ -1,0 +1,300 @@
+/* =============================================
+   HARLEQUINS FC — Match Tickets Styles
+   ============================================= */
+
+.ticketsPage {
+  min-height: 100vh;
+  background-color: var(--hcc-darker);
+  color: var(--hcc-white);
+  padding-top: var(--nav-height);
+}
+
+/* ---- Hero Section ---- */
+.heroSection {
+  position: relative;
+  padding: 4.5rem 2rem 3.5rem;
+  background: linear-gradient(
+    180deg,
+    var(--hcc-dark) 0%,
+    var(--hcc-darker) 100%
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(233, 30, 99, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+}
+
+.heroTitle {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--hcc-white);
+}
+
+/* ---- Fixture & Ticket Cards Grid Layout ---- */
+.ticketCard {
+  background-color: var(--hcc-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: grid !important;
+  grid-template-columns: 220px 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 1.8rem !important;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.ticketCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+  transition: background var(--transition-fast);
+}
+
+.ticketCard:hover {
+  border-color: rgba(233, 30, 99, 0.4) !important;
+  transform: translateX(4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.ticketCard:hover::before {
+  background: var(--hcc-accent);
+}
+
+.leftInfo {
+  min-width: 0;
+}
+
+.matchupCenter {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 0.5rem;
+}
+
+.homeTeam {
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 0;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.awayTeam {
+  flex: 1;
+  justify-content: flex-start;
+  min-width: 0;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.teamName {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.teamLogo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 4px;
+}
+
+.teamLogoFallback {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--hcc-gray-300) !important;
+  flex-shrink: 0;
+}
+
+.vsBadge {
+  font-family: var(--font-heading);
+  font-weight: 800 !important;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.rightActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 0;
+}
+
+.buyBtn {
+  font-weight: 700 !important;
+  letter-spacing: 0.5px;
+  background-color: var(--hcc-accent) !important;
+  transition: filter var(--transition-fast);
+}
+
+.buyBtn:hover {
+  filter: brightness(1.15);
+}
+
+.tierPill {
+  background: var(--hcc-surface-light) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+}
+
+/* ---- Digital Pass / My Tickets Card ---- */
+.passCard {
+  background: linear-gradient(
+    135deg,
+    var(--hcc-surface) 0%,
+    var(--hcc-surface-light) 100%
+  ) !important;
+  border: 1px solid rgba(233, 30, 99, 0.3) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.passCardCancelled {
+  opacity: 0.65;
+  filter: grayscale(0.7);
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.passCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--hcc-accent);
+}
+
+.passBarcode {
+  background-color: #ffffff;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.barcodeLines {
+  font-family: monospace;
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  color: #0f0f1a;
+}
+
+/* ---- Modal Styles ---- */
+.modalContent {
+  background-color: var(--hcc-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.modalHeader {
+  background-color: var(--hcc-surface) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modalBody {
+  padding-top: 1.2rem !important;
+}
+
+.fixtureModalSummary {
+  background-color: var(--hcc-darker) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tierCard {
+  background-color: var(--hcc-darker) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tierCard:hover:not(.tierCardDisabled) {
+  border-color: rgba(233, 30, 99, 0.5) !important;
+}
+
+.tierCardSelected {
+  border-color: var(--hcc-accent) !important;
+  background-color: rgba(233, 30, 99, 0.06) !important;
+}
+
+.tierCardDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.numberInput {
+  background-color: var(--hcc-darker) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: white !important;
+}
+
+.seatAllocationBox {
+  background-color: rgba(233, 30, 99, 0.05) !important;
+  border: 1px solid rgba(233, 30, 99, 0.2) !important;
+}
+
+.confirmBtn {
+  background-color: var(--hcc-accent) !important;
+}
+
+/* ---- Responsive Queries ---- */
+@media (max-width: 1100px) {
+  .ticketCard {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem;
+  }
+
+  .homeTeam,
+  .awayTeam {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .rightActions {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 650px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .teamName {
+    font-size: 0.85rem;
+  }
+}

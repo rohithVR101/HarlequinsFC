@@ -44,10 +44,18 @@ public class AuthorizationFilterHeader extends AbstractGatewayFilterFactory<Auth
                             .get(HttpHeaders.AUTHORIZATION))
                     .get(0)
                     .replace("Bearer ", "");
-            if (!isJWTValid(token)) {
+
+            String username = getUsernameFromToken(token);
+            if (username == null) {
                 return onError(exchange);
             }
-            return chain.filter(exchange);
+
+            // Inject validated username into downstream request header
+            ServerHttpRequest mutatedRequest = serverHttpRequest.mutate()
+                    .header("X-User-Name", username)
+                    .build();
+
+            return chain.filter(exchange.mutate().request(mutatedRequest).build());
         };
     }
 
@@ -57,21 +65,23 @@ public class AuthorizationFilterHeader extends AbstractGatewayFilterFactory<Auth
         return response.setComplete();
     }
 
-    boolean isJWTValid(String token) {
+    String getUsernameFromToken(String token) {
         String secret = environment.getProperty("token.secret");
-        byte[] secretKeyBytes = Base64.getEncoder().encode(Objects.requireNonNull(secret).getBytes());
+        if (secret == null) {
+            return null;
+        }
+        byte[] secretKeyBytes = Base64.getEncoder().encode(secret.getBytes());
         SecretKey secretKey = new SecretKeySpec(secretKeyBytes, "HmacSHA512");
         JwtParser jwtParser = Jwts.parser().verifyWith(secretKey).build();
         try {
             Claims claims = jwtParser.parseSignedClaims(token).getPayload();
             String subject = claims.getSubject();
             if (subject == null || subject.isBlank()) {
-                return false;
+                return null;
             }
+            return subject;
         } catch (Exception exception) {
-            return false;
+            return null;
         }
-        return true;
     }
-
 }
