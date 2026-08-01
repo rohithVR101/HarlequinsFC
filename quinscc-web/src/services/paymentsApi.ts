@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { TicketCategoryType } from '../data/ticketsData';
+import type { TicketCategoryType } from './ticketsApi';
 
 export interface CheckoutSessionPayload {
   fixtureId: string;

@@ -144,17 +144,23 @@ function FixtureCard({ fixture }: { fixture: Fixture }) {
             <Text fw={800} size="lg" c="white" className={classes.matchTime}>
               {fixture.time} GMT
             </Text>
-            <Button
-              onClick={() => navigate('/tickets', { state: { autoBookFixtureId: fixture.id } })}
-              variant="outline"
-              color="pink"
-              radius="xl"
-              size="xs"
-              leftSection={<TicketIcon size={14} weight="bold" />}
-              className={classes.actionBtn}
-            >
-              Tickets
-            </Button>
+            {fixture.homeTeam.isHarlequins ? (
+              <Button
+                onClick={() => navigate('/tickets', { state: { autoBookFixtureId: fixture.id } })}
+                variant="outline"
+                color="pink"
+                radius="xl"
+                size="xs"
+                leftSection={<TicketIcon size={14} weight="bold" />}
+                className={classes.actionBtn}
+              >
+                Book Tickets
+              </Button>
+            ) : (
+              <Badge variant="outline" color="gray" size="sm">
+                Away Booking via Host Club
+              </Badge>
+            )}
           </>
         ) : (
           <Button

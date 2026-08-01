@@ -16,6 +16,7 @@ import {
   LightningIcon,
   BuildingsIcon,
   CompassIcon,
+  CarIcon,
 } from '@phosphor-icons/react';
 import classes from './Stadium.module.css';
 
@@ -94,7 +95,7 @@ function Stadium() {
                   Opened
                 </Text>
                 <Text fw={800} size="lg" c="white" className={classes.statValue}>
-                  2021 Modern
+                  2021
                 </Text>
               </div>
             </Group>
@@ -158,6 +159,99 @@ function Stadium() {
                 </Text>
               </Paper>
             </Stack>
+          </Grid.Col>
+        </Grid>
+
+        {/* Stadium Travel Guide, Bicycle Hubs & Car Parking */}
+        <Grid gap="lg" mt="1.5rem">
+          <Grid.Col span={{ base: 12, md: 6 }}>
+            <Paper className={classes.sectionPaper} radius="lg" p="xl">
+              <Group mb="md" gap="xs">
+                <ThemeIcon color="teal" size="lg" radius="xl">
+                  <TrainIcon size={20} />
+                </ThemeIcon>
+                <div>
+                  <Text size="xs" fw={700} c="teal" tt="uppercase">
+                    Sustainable Transport • Richmond Council
+                  </Text>
+                  <Title order={3} className={classes.sectionTitle}>
+                    🚲 Bicycle Hubs & Green Travel
+                  </Title>
+                </div>
+              </Group>
+              <Text c="gray.3" size="sm" mb="sm" style={{ lineHeight: 1.7 }}>
+                In accordance with Richmond Council's Green Travel Plan, Harlequins FC strongly encourages supporters to cycle, walk, or use public transport on matchdays.
+              </Text>
+              <Stack gap="xs">
+                <Paper p="sm" radius="md" style={{ backgroundColor: 'rgba(74, 222, 128, 0.08)', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
+                  <Text fw={700} size="sm" c="#4ade80">
+                    🏆 Craneford Way Cycle Hub (350 Racks)
+                  </Text>
+                  <Text size="xs" c="dimmed" mt={2}>
+                    Located at the North Plaza (River Crane path arrival) and South Gate entrance. Free, secure, covered racks with 24/7 CCTV monitoring. No booking required.
+                  </Text>
+                </Paper>
+                <Paper p="sm" radius="md" style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  <Text fw={700} size="sm" c="white">
+                    🚴 Twickenham Stoop Cycle Overflow (100+ Racks)
+                  </Text>
+                  <Text size="xs" c="dimmed" mt={2}>
+                    Available outside Gates 1 and 3 of the adjacent Stoop stadium for peak fixture overflows and visiting supporters.
+                  </Text>
+                </Paper>
+              </Stack>
+            </Paper>
+          </Grid.Col>
+
+          <Grid.Col span={{ base: 12, md: 6 }}>
+            <Paper className={classes.sectionPaper} radius="lg" p="xl">
+              <Group mb="md" gap="xs">
+                <ThemeIcon color="pink" size="lg" radius="xl">
+                  <CarIcon size={20} />
+                </ThemeIcon>
+                <div>
+                  <Text size="xs" fw={700} c="var(--hcc-accent)" tt="uppercase">
+                    Matchday Vehicle Parking
+                  </Text>
+                  <Title order={3} className={classes.sectionTitle}>
+                    Official Car Parks
+                  </Title>
+                </div>
+              </Group>
+              <Text c="gray.3" size="sm" mb="sm" style={{ lineHeight: 1.7 }}>
+                On-site general car parking is strictly limited to pre-booked ticket holders. ANPR license plate recognition cameras enforce gate access.
+              </Text>
+              <Stack gap="xs">
+                <Group justify="space-between" p="xs" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  <div>
+                    <Text fw={700} size="xs" c="white">Zone A — On-Site Blue Badge</Text>
+                    <Text size="xs" c="dimmed">North Gate • 75 spaces (Accessible Only)</Text>
+                  </div>
+                  <Text fw={700} size="xs" c="teal">Pre-Booked</Text>
+                </Group>
+                <Group justify="space-between" p="xs" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  <div>
+                    <Text fw={700} size="xs" c="white">Zone B — VIP & Directors</Text>
+                    <Text size="xs" c="dimmed">Underground • 40 spaces (Box Holders)</Text>
+                  </div>
+                  <Text fw={700} size="xs" c="yellow">VIP Package</Text>
+                </Group>
+                <Group justify="space-between" p="xs" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  <div>
+                    <Text fw={700} size="xs" c="white">Zone C — Stoop North Car Park</Text>
+                    <Text size="xs" c="dimmed">Adjacent to Ground • 300 spaces</Text>
+                  </div>
+                  <Text fw={700} size="xs" c="var(--hcc-accent)">£15</Text>
+                </Group>
+                <Group justify="space-between" p="xs">
+                  <div>
+                    <Text fw={700} size="xs" c="white">Zone D — Rosebine Car Park</Text>
+                    <Text size="xs" c="dimmed">A316 Chertsey Road (5-min walk) • 450 spaces</Text>
+                  </div>
+                  <Text fw={700} size="xs" c="var(--hcc-accent)">£10</Text>
+                </Group>
+              </Stack>
+            </Paper>
           </Grid.Col>
         </Grid>
       </div>

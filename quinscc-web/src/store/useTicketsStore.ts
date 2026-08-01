@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { UserTicket, TicketCategoryType } from '../data/ticketsData';
+import type { UserTicket, TicketCategoryType } from '../services/ticketsApi';
 import {
   getFixtureAvailability,
   purchaseTickets as apiPurchaseTickets,
@@ -35,7 +35,7 @@ export interface TicketsState {
 // Purge legacy local storage key from earlier mock version
 try {
   localStorage.removeItem('quinsfc-tickets-storage');
-} catch {}
+} catch { }
 
 export const useTicketsStore = create<TicketsState>()((set, get) => ({
   availability: {},
