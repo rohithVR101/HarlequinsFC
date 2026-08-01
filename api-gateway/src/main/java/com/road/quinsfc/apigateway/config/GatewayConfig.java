@@ -27,8 +27,16 @@ public class GatewayConfig {
                                 .and()
                                 .path("/api/members/**")
                                 .uri("lb://members-ms"))
-                .route("parking-service",
-                        r -> r.path("/api/parking/**")
+                .route("parking-service-public",
+                        r -> r.method(HttpMethod.GET)
+                                .and()
+                                .path("/api/parking/zones", "/api/parking/zones/availability")
+                                .uri("lb://parking-ms"))
+                .route("parking-service-protected",
+                        r -> r.header(HttpHeaders.AUTHORIZATION, "Bearer (.*)")
+                                .and()
+                                .path("/api/parking/reservations/**", "/api/parking/vehicles/**")
+                                .filters(f -> f.filter(authorizationFilterHeader.apply(new AuthorizationFilterHeader.Config())))
                                 .uri("lb://parking-ms"))
                 .route("tickets-service-public",
                         r -> r.method(HttpMethod.GET)

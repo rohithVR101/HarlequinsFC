@@ -1,5 +1,55 @@
 import axios from 'axios';
-import type { TicketCategoryType, UserTicket } from '../data/ticketsData';
+
+export type TicketCategoryType = 'STANDARD' | 'PREMIUM' | 'VIP';
+
+export interface CategoryInfo {
+  id: TicketCategoryType;
+  name: string;
+  price: number; // GBP
+  description: string;
+  defaultCount: number;
+}
+
+export interface UserTicket {
+  ticketId: string;
+  fixtureId: string;
+  memberUsername: string;
+  category: TicketCategoryType;
+  categoryName: string;
+  price: number;
+  quantity: number;
+  totalPrice: number;
+  seatSection: string;
+  seatRow: string;
+  seatNumbers: string;
+  purchasedAt: string;
+  status: 'PURCHASED' | 'CANCELLED';
+  qrCode: string;
+}
+
+export const TICKET_CATEGORIES: CategoryInfo[] = [
+  {
+    id: 'STANDARD',
+    name: 'Standard Match Pass',
+    price: 45,
+    description: 'General admission seating in the North and South Stands with great pitch visibility.',
+    defaultCount: 120,
+  },
+  {
+    id: 'PREMIUM',
+    name: 'East Terrace Premium',
+    price: 85,
+    description: 'Padded mid-tier seating on the half-way line with exclusive lounge access.',
+    defaultCount: 35,
+  },
+  {
+    id: 'VIP',
+    name: 'Quins Diamond VIP Suite',
+    price: 175,
+    description: 'Ultra-luxury box seating, complimentary dining, player lounge pass, and dedicated Zone B Underground VIP Parking space included.',
+    defaultCount: 8,
+  },
+];
 
 export interface FixtureAvailabilityResponse {
   fixtureId: string;

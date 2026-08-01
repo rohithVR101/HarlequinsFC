@@ -24,7 +24,7 @@ import {
 } from '@phosphor-icons/react';
 import type { Fixture } from '../../../data/fixturesData';
 import { fixturesData } from '../../../data/fixturesData';
-import { TICKET_CATEGORIES } from '../../../data/ticketsData';
+import { TICKET_CATEGORIES } from '../../../services/ticketsApi';
 import { useTicketsStore } from '../../../store/useTicketsStore';
 import { useAuthStore } from '../../../store/useAuthStore';
 import { TicketPurchaseModal } from './TicketPurchaseModal';
@@ -58,9 +58,9 @@ export function Tickets() {
   const [modalOpened, setModalOpened] = useState(false);
   const [notification, setNotification] = useState<{ title: string; message: string; color: string } | null>(null);
 
-  // Filter only upcoming fixtures
+  // Filter only upcoming HOME fixtures
   const upcomingFixtures = useMemo(() => {
-    return fixturesData.filter((f) => f.status === 'UPCOMING');
+    return fixturesData.filter((f) => f.status === 'UPCOMING' && f.homeTeam.isHarlequins);
   }, []);
 
   // Fetch availability from tickets-service on mount
@@ -136,7 +136,7 @@ export function Tickets() {
             Official Match Tickets
           </Title>
           <Text size="md" c="var(--hcc-gray-400)" ta="center" maw={580}>
-            Secure your seats at Craneford Way Stadium and away match grounds for the Quins 2026/27 season.
+            Secure your seats at Craneford Way Stadium for the Quins 2026/27 season.
           </Text>
 
           <Group gap="sm" mt="xs">
@@ -187,10 +187,10 @@ export function Tickets() {
           <Group justify="space-between" align="center">
             <Stack gap={2}>
               <Title order={2} size="h3" c="white" tt="uppercase" lts="1px">
-                Upcoming Fixtures ({upcomingFixtures.length})
+                Upcoming Home Fixtures ({upcomingFixtures.length})
               </Title>
               <Text size="sm" c="var(--hcc-gray-400)">
-                Real-time ticket availability and seat reservation
+                Official Harlequins FC Home Matchday Tickets & Matchday Parking Passes
               </Text>
             </Stack>
 

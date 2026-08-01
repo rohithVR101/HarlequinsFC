@@ -25,14 +25,19 @@ import {
   XCircleIcon,
   LockKeyIcon,
   QrCodeIcon,
+  CarIcon,
+  ArrowRightIcon,
 } from '@phosphor-icons/react';
 import type { Fixture } from '../../../data/fixturesData';
-import type { TicketCategoryType } from '../../../data/ticketsData';
-import { TICKET_CATEGORIES } from '../../../data/ticketsData';
+import { isHomeMatch } from '../../../data/fixturesData';
+import type { TicketCategoryType } from '../../../services/ticketsApi';
+import { TICKET_CATEGORIES } from '../../../services/ticketsApi';
 import { useTicketsStore } from '../../../store/useTicketsStore';
 import { useAuthStore } from '../../../store/useAuthStore';
 import { createCheckoutSession, fulfillPaymentSession } from '../../../services/paymentsApi';
 import { StripePaymentCheckout } from '../../payments/StripePaymentCheckout';
+import { ParkingZoneSelector } from '../../parking/ParkingZoneSelector';
+import { useParkingStore } from '../../../store/useParkingStore';
 import classes from './Tickets.module.css';
 
 interface TicketPurchaseModalProps {
@@ -50,15 +55,19 @@ export function TicketPurchaseModal({
 }: TicketPurchaseModalProps) {
   const { user, token } = useAuthStore();
   const { getAvailableCount, fetchAvailability, purchaseTickets } = useTicketsStore();
+  const { availability: parkingAvail, reserveParking } = useParkingStore();
 
   const [activeStep, setActiveStep] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<TicketCategoryType>('STANDARD');
   const [quantity, setQuantity] = useState<number>(1);
+  const [selectedParkingZoneId, setSelectedParkingZoneId] = useState<string | null>(null);
+
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [ticketDetails, setTicketDetails] = useState<{
     ticketId: string;
     seats: string;
     section: string;
+    parkingReservationId?: string;
   } | null>(null);
 
   // Reset stepper & refresh availability when modal opens or fixture changes
@@ -67,6 +76,7 @@ export function TicketPurchaseModal({
       setErrorMsg(null);
       setActiveStep(0);
       setTicketDetails(null);
+      setSelectedParkingZoneId(null);
 
       fetchAvailability(fixture.id).then(() => {
         const store = useTicketsStore.getState();
@@ -89,7 +99,8 @@ export function TicketPurchaseModal({
 
   if (!fixture) return null;
 
-  const currentCategoryInfo = TICKET_CATEGORIES.find((c) => c.id === selectedCategory)!;
+  const isHome = isHomeMatch(fixture);
+  const currentCategoryInfo = TICKET_CATEGORIES.find((c) => c.id === selectedCategory) || TICKET_CATEGORIES[0];
   const availableCount = getAvailableCount(fixture.id, selectedCategory);
   const effectiveAvailable = availableCount === -1 ? 0 : availableCount;
   const totalFixtureAvail = getAvailableCount(fixture.id);
@@ -99,10 +110,15 @@ export function TicketPurchaseModal({
     const avail = getAvailableCount(fixture.id, catId);
     if (avail <= 0) return;
     setSelectedCategory(catId);
+    if (catId === 'VIP') {
+      setSelectedParkingZoneId(null);
+    }
     setQuantity(1);
   };
 
-  const totalPrice = currentCategoryInfo.price * quantity;
+  const selectedParkingZone = isHome && selectedCategory !== 'VIP' && selectedParkingZoneId && fixture ? (parkingAvail[fixture.id] || []).find(z => z.zoneId === selectedParkingZoneId) : null;
+  const parkingPrice = selectedParkingZone && selectedParkingZone.priceMinPence ? selectedParkingZone.priceMinPence / 100 : 0;
+  const totalPrice = currentCategoryInfo.price * quantity + parkingPrice;
 
   const handleProceedToPayment = () => {
     setErrorMsg(null);
@@ -121,12 +137,28 @@ export function TicketPurchaseModal({
       return;
     }
 
-    setActiveStep(1);
+    if (selectedCategory === 'VIP') {
+      setActiveStep(2); // Skip Step 2 parking for VIP, go directly to Stripe Payment
+    } else {
+      setActiveStep(1); // Proceed to Step 2 parking for Standard / Premium
+    }
   };
 
   // Payment Execution Handler for Reusable Stripe Component
   const handleExecutePayment = async () => {
     if (!user || !token) return;
+
+    let parkingRes = null;
+    if (isHome && selectedParkingZoneId && selectedCategory !== 'VIP') {
+      parkingRes = await reserveParking(
+        {
+          fixtureId: fixture.id,
+          zoneId: selectedParkingZoneId,
+          isPaid: true,
+        },
+        token
+      );
+    }
 
     // Execute backend order checkout session & fulfillment
     let session;
@@ -146,6 +178,7 @@ export function TicketPurchaseModal({
           ticketId: fulfilledOrder.ticketId || `HFC-TKT-${Math.floor(1000 + Math.random() * 9000)}`,
           seats: `Seats ${Math.floor(1 + Math.random() * 20)}-${Math.floor(1 + Math.random() * 20) + quantity - 1}`,
           section: `${selectedCategory} Stand - Block ${selectedCategory.charAt(0)}1`,
+          parkingReservationId: parkingRes?.reservationId,
         });
       } catch {
         const pass = await purchaseTickets(
@@ -156,6 +189,7 @@ export function TicketPurchaseModal({
           ticketId: pass.ticketId,
           seats: pass.seatNumbers,
           section: pass.seatSection,
+          parkingReservationId: parkingRes?.reservationId,
         });
       }
     } else {
@@ -167,10 +201,11 @@ export function TicketPurchaseModal({
         ticketId: pass.ticketId,
         seats: pass.seatNumbers,
         section: pass.seatSection,
+        parkingReservationId: parkingRes?.reservationId,
       });
     }
 
-    setActiveStep(2);
+    setActiveStep(3);
     onSuccess();
   };
 
@@ -197,12 +232,13 @@ export function TicketPurchaseModal({
     >
       <Stack gap="md">
         {/* Mantine Stepper Visual Progress Bar */}
-        <Stepper active={activeStep} onStepClick={setActiveStep} color="pink" size="sm" radius="md">
+        <Stepper active={activeStep} onStepClick={(s) => s < activeStep && setActiveStep(s)} color="pink" size="sm" radius="md">
+          {/* STEP 1: TICKET SELECTION */}
           <Stepper.Step
-            label="Tier Selection"
-            description="Category & Qty"
+            label="Tickets"
+            description="Select Tier & Qty"
             icon={<TicketIcon size={18} />}
-            allowStepSelect={activeStep > 0 && activeStep < 2}
+            allowStepSelect={activeStep > 0 && activeStep < 3}
           >
             <Stack gap="md" mt="sm">
               {/* Match Overview Header */}
@@ -353,14 +389,31 @@ export function TicketPurchaseModal({
                 </Group>
               </Paper>
 
-              {/* Total & Action */}
+              {/* Dedicated VIP Parking Banner for VIP Suite Holders */}
+              {selectedCategory === 'VIP' && (
+                <Paper p="sm" radius="md" style={{ backgroundColor: 'rgba(234, 179, 8, 0.1)', border: '1px solid rgba(234, 179, 8, 0.3)' }}>
+                  <Group gap="xs">
+                    <SparkleIcon size={20} color="#eab308" />
+                    <div>
+                      <Text fw={700} size="xs" c="#eab308">
+                        Dedicated VIP Underground Parking Pass Included
+                      </Text>
+                      <Text size="xs" c="dimmed">
+                        Quins Diamond VIP Suite tickets automatically include complimentary access to Zone B Underground VIP Car Park.
+                      </Text>
+                    </div>
+                  </Group>
+                </Paper>
+              )}
+
+              {/* Step 0 Subtotal & Action */}
               <Group justify="space-between" align="center" mt="xs">
                 <Stack gap={0}>
                   <Text size="xs" c="var(--hcc-gray-400)" tt="uppercase" lts="1px">
-                    Total Amount
+                    Tickets Subtotal
                   </Text>
                   <Text fw={900} size="xl" c="white">
-                    £{totalPrice} <Text component="span" size="xs" c="var(--hcc-gray-400)">inc. VAT</Text>
+                    £{currentCategoryInfo.price * quantity} <Text component="span" size="xs" c="var(--hcc-gray-400)">inc. VAT</Text>
                   </Text>
                 </Stack>
 
@@ -373,18 +426,60 @@ export function TicketPurchaseModal({
                     color="pink"
                     size="md"
                     radius="xl"
-                    leftSection={<LockKeyIcon size={18} weight="bold" />}
+                    rightSection={<ArrowRightIcon size={16} weight="bold" />}
                     disabled={effectiveAvailable === 0 || quantity === 0}
                     onClick={handleProceedToPayment}
                     className={classes.confirmBtn}
                   >
-                    {effectiveAvailable === 0 ? 'Sold Out' : `Proceed to Stripe (£${totalPrice})`}
+                    {effectiveAvailable === 0 ? 'Sold Out' : 'Continue →'}
                   </Button>
                 </Group>
               </Group>
             </Stack>
           </Stepper.Step>
 
+          {/* STEP 2: OPTIONAL MATCHDAY PARKING */}
+          <Stepper.Step
+            label="Parking"
+            description="Optional Add-On"
+            icon={<CarIcon size={18} />}
+            allowStepSelect={activeStep > 1 && activeStep < 3}
+          >
+            <Stack gap="md" mt="sm">
+              <Alert color="blue" variant="light" icon={<InfoIcon size={18} />}>
+                Securing high-demand tickets fast? You can skip selecting parking now and add a car park pass anytime later under 'My Tickets'.
+              </Alert>
+
+              <ParkingZoneSelector
+                fixtureId={fixture.id}
+                selectedZoneId={selectedParkingZoneId}
+                onSelectZone={(zoneId) => setSelectedParkingZoneId(zoneId)}
+              />
+
+              {/* Total & Step 1 Actions */}
+              <Group justify="space-between" align="center" mt="xs">
+                <Button variant="default" size="xs" radius="xl" onClick={() => setActiveStep(0)}>
+                  ← Back to Tickets
+                </Button>
+
+                <Button
+                  variant="filled"
+                  color="pink"
+                  size="md"
+                  radius="xl"
+                  rightSection={<ArrowRightIcon size={16} weight="bold" />}
+                  onClick={() => setActiveStep(2)}
+                  className={classes.confirmBtn}
+                >
+                  {selectedParkingZoneId
+                    ? `Proceed to Payment (£${totalPrice})`
+                    : `Continue without Parking (£${totalPrice})`}
+                </Button>
+              </Group>
+            </Stack>
+          </Stepper.Step>
+
+          {/* STEP 3: STRIPE CHECKOUT */}
           <Stepper.Step
             label="Payment"
             description="Stripe Checkout"
@@ -399,11 +494,12 @@ export function TicketPurchaseModal({
                 badgeLabel={fixture.competition}
                 itemDetails={[
                   { label: 'Category Tier', value: currentCategoryInfo.name },
-                  { label: 'Quantity', value: `${quantity} ${quantity === 1 ? 'Pass' : 'Passes'}` },
+                  { label: 'Ticket Quantity', value: `${quantity} ${quantity === 1 ? 'Pass' : 'Passes'} (£${currentCategoryInfo.price * quantity})` },
+                  { label: 'Matchday Parking', value: selectedCategory === 'VIP' ? 'Zone B VIP Underground (Included)' : selectedParkingZone ? `${selectedParkingZone.zoneName} (£${parkingPrice})` : 'None (Skipped)' },
                   { label: 'Stadium Venue', value: fixture.venue.split(',')[0] },
                 ]}
                 onPaymentSuccess={handleExecutePayment}
-                onBack={() => setActiveStep(0)}
+                onBack={() => setActiveStep(selectedCategory === 'VIP' ? 0 : 1)}
                 onClose={onClose}
               />
             </Stack>

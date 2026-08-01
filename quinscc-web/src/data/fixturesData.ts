@@ -26,6 +26,10 @@ export interface Fixture {
   roundNote?: string;
 }
 
+export function isHomeMatch(fixture: { homeTeam: { isHarlequins: boolean } }): boolean {
+  return fixture.homeTeam.isHarlequins;
+}
+
 export const fixturesData: Fixture[] = [
   // --- AUGUST 2026 ---
   {
