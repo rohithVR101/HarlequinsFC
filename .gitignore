@@ -17,6 +17,8 @@ bin/
 *.war
 *.ear
 *.log
+logs/
+**/logs/
 
 # Node & Angular (quinscc-app, quinscc-web)
 node_modules/

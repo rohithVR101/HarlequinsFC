@@ -3,6 +3,7 @@ plugins {
 	id 'war'
 	id 'org.springframework.boot' version '3.5.3'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
 }
 
 group = 'com.road.quinsfc'
@@ -20,6 +21,7 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2025.0.1")
+	set('testcontainersVersion', "1.20.4")
 }
 
 dependencies {
@@ -39,6 +41,10 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'org.testcontainers:kafka'
+	testRuntimeOnly 'com.h2database:h2'
 }
 
 dependencyManagement {
