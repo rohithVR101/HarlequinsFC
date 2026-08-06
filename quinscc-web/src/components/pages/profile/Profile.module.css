@@ -1,0 +1,37 @@
+.profilePage {
+  min-height: 100vh;
+  background-color: var(--hcc-dark-bg, #0b0c10);
+  color: #ffffff;
+}
+
+.heroSection {
+  background: linear-gradient(135deg, rgba(230, 0, 126, 0.15) 0%, rgba(15, 15, 26, 0.95) 100%),
+    radial-gradient(circle at top right, rgba(0, 180, 216, 0.1) 0%, transparent 60%);
+  padding: 4rem 2rem 3rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.heroContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.profileCard {
+  background: var(--hcc-surface, #14151e);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.2s ease;
+}
+
+.profileCard:hover {
+  border-color: rgba(230, 0, 126, 0.3);
+}
